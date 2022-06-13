@@ -22,16 +22,15 @@ app.get("/news/get", async (req,res)=>{
  });
 
 
-
 app.post("/news/new",async (req,res)=>{
     const news = new News({...req.body})
     news.save();
     res.send("News Added");
 });
 
-app.put("/news/update",async (req,res)=>{
-    const id=req.query;
-    const news = await News.updateOne({id:{...req.body}});
+app.put("/news/update:id",async (req,res)=>{
+    console.log(req.params.id);
+    const news = await News.updateOne({_id:`${req.params.id}`},{$set:{...req.body}});
     res.send("News Updated");
 });
 
